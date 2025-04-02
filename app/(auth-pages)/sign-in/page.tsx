@@ -3,8 +3,15 @@ import Image from "next/image";
 import HeroImage from "../../_assets/trucks.webp";
 import { SignInForm } from "./components/SignInForm";
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
-  const searchParams = await props.searchParams;
+export default async function Login({
+  searchParams,
+}: {
+  searchParams: { error?: string };
+}) {
+  // Extract error message from URL query parameters
+  const errorMessage = searchParams?.error
+    ? decodeURIComponent(searchParams.error)
+    : null;
 
   return (
     <div className="overscroll-none flex flex-col md:flex-row h-screen w-full">
@@ -22,7 +29,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
 
       {/* Login form - full width on small screens, 50% width on medium screens and up */}
       <div className="w-full md:w-1/2 flex-1 flex pt-48 md:pt-0 md:items-center justify-center py-6 px-4">
-        <SignInForm message={searchParams} />
+        <SignInForm errorMessage={errorMessage} />
       </div>
     </div>
   );

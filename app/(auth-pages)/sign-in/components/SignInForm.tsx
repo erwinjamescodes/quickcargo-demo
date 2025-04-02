@@ -6,10 +6,10 @@ import { SubmitButton } from "@/components/submit-button";
 import { TextInput, PasswordInput } from "@mantine/core";
 
 interface SignInFormProps {
-  message: Message;
+  errorMessage: string | null;
 }
 
-export function SignInForm({ message }: SignInFormProps) {
+export function SignInForm({ errorMessage }: SignInFormProps) {
   return (
     <div className="w-full max-w-md px-4 sm:px-0 mx-auto">
       {/* Logo */}
@@ -70,8 +70,7 @@ export function SignInForm({ message }: SignInFormProps) {
         >
           Sign in
         </SubmitButton>
-
-        <FormMessage message={message} />
+        <p className="text-sm text-red-500 text-center">{errorMessage}</p>
       </form>
     </div>
   );
