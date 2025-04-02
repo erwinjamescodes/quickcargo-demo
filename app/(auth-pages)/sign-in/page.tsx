@@ -1,6 +1,7 @@
 import Image from "next/image";
 import HeroImage from "../../_assets/trucks.webp";
 import { SignInForm } from "./components/SignInForm";
+import { Suspense } from "react";
 
 export default async function Login() {
   return (
@@ -17,7 +18,9 @@ export default async function Login() {
       </div>
 
       <div className="w-full md:w-1/2 flex-1 flex pt-48 md:pt-0 md:items-center justify-center py-6 px-4">
-        <SignInForm />
+        <Suspense fallback={<div>Loading...</div>}>
+          <SignInForm />
+        </Suspense>
       </div>
     </div>
   );
