@@ -1,15 +1,25 @@
 "use client";
 
 import { signInAction } from "@/app/actions";
-import { FormMessage, type Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { TextInput, PasswordInput } from "@mantine/core";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-interface SignInFormProps {
-  errorMessage: string | null;
-}
+export function SignInForm() {
+  const searchParams = useSearchParams();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-export function SignInForm({ errorMessage }: SignInFormProps) {
+  useEffect(() => {
+    // Get error from URL and decode it
+    const error = searchParams.get("error");
+    if (error) {
+      setErrorMessage(decodeURIComponent(error));
+    } else {
+      setErrorMessage(null);
+    }
+  }, [searchParams]);
+
   return (
     <div className="w-full max-w-md px-4 sm:px-0 mx-auto">
       {/* Logo */}
@@ -70,7 +80,9 @@ export function SignInForm({ errorMessage }: SignInFormProps) {
         >
           Sign in
         </SubmitButton>
-        <p className="text-sm text-red-500 text-center">{errorMessage}</p>
+        {errorMessage && (
+          <p className="text-sm text-red-500 text-center">{errorMessage}</p>
+        )}
       </form>
     </div>
   );
